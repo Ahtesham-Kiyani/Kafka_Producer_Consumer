@@ -12,17 +12,3 @@ const consumerClient = new kafka.KafkaClient({ kafkaHost: kafkaServer });
 const consumer = new kafka.Consumer(consumerClient, [
   { topic: topic, fromBeginning: true },
 ]);
-
-consumer.on("message", (message) => {
-  console.log("[" + count + "]" + " Received message:", message.value);
-  count++;
-});
-
-consumer.on("error", (err) => {
-  console.error("Consumer error:", err);
-});
-
-// Handle process termination
-process.on("SIGINT", () => {
-  consumer.close(true, () => process.exit());
-});
